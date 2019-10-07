@@ -10,8 +10,29 @@ test_that("Components of yield parsing functions", {
   expect_equal(FloralShoots(x), c(15,9))
   expect_equal(VegetShoots(x), c(6,0))
 
+  expect_equal(coyStart(x), c(TRUE, TRUE))
+  expect_equal(coyEnd(x), c(TRUE, TRUE))
+
+  expect_equal(checkChars(x),
+               list(c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+                      TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+                      TRUE, TRUE,  TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+                      TRUE, TRUE, TRUE, TRUE,  TRUE),
+                    c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+                      TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)))
+
+  expect_equal(okChars(x), c(TRUE, TRUE))
+  expect_null(coyChars(x))
+
+
   x <- c("0.0574250.240.6.5.00347.21.623", ",1234;567.8.9L10")
 
+  expect_equal(WinterBuds(x), c(30,12))
+  expect_error(KingFlowers(x), "argument of length 0")
+  expect_warning(LateralFlowers(x), "NAs introduced by coercion")
+  expect_equal(suppressWarnings(LateralFlowers(x)), c(NA, 10))
+  expect_error(FloralShoots(x), "argument of length 0")
+  expect_error(VegetShoots(x), "argument of length 0")
 
   expect_equal(coyStart(x), c(FALSE, TRUE))
   expect_equal(coyEnd(x), c(FALSE, TRUE))
