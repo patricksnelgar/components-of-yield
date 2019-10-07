@@ -1,0 +1,124 @@
+---
+title: "Components of Yield"
+author: "Marcus Davy"
+date: "8/22/2019"
+output: 
+    github_document : []
+    html_document: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+suppressPackageStartupMessages(library(RLinuxModules))
+
+module("load git/2.21.0")
+gitRevision <- function(allcommits=FALSE){
+  ## Fetch all commits for a specific file, knitr::current_input() can be NULL
+  ## If the filename is omitted, the latest commits will be returned
+  shasum <- system(paste("git log --pretty=format:'%h'", knitr::current_input()), intern=TRUE)
+  if(!allcommits) {
+    shasum <- shasum[1]
+  }
+  return(shasum)
+}
+
+## Capture short sha1sum for latest revision of this Rmd source file
+revision <- gitRevision()
+```
+
+
+> The master version of this document is on [Github](https://github.com/Actinidia/eBrida/blob/master/Scripts/ComponentsOfYield/README.Rmd), currently revision
+[`r revision`](https://github.com/Actinidia/eBrida/commit/`r revision`) last modified  *`r format(Sys.time(), "%d %b %Y")`*.
+
+## Components of Yield
+
+There is a requirement to create functions in R (and perl) to parse
+components of yield information for both current and historical formats.
+
+Kris Kramer-Walter has documented the conversion in a word document.
+
+## R code
+
+The following script coy.R is a basis of functions to do the conversion.
+This requires a formalized test suite, and potentially the methods should
+be part of an S4 object orientated class.
+
+```{r loadCOY}
+source("R/coy.R")
+ls()
+```
+
+## Example 1
+
+The following example was provided;
+
+```{r ex1}
+x <- ",0.0574250.240.6.5.00347.21.6L23"
+
+WinterBuds(x)
+KingFlowers(x)
+LateralFlowers(x)
+FloralShoots(x)
+VegetShoots(x)
+```
+
+## Example 2
+
+Vectorized example;
+
+```{r ex2}
+x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9L10")
+
+WinterBuds(x)
+KingFlowers(x)
+LateralFlowers(x)
+FloralShoots(x)
+VegetShoots(x)
+```
+
+
+## Tabular conversion
+
+Copying the output headers created in excel;
+
+```{r tabular_ex}
+x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9L10")
+
+wideCOY(x)
+```
+
+
+
+## Sanity checking
+
+The issues appear to be;
+
+1. All input records start with a "," for historical reasons to enforce character conversion
+2. All records should contain an "L", or potentially "l" before lateral shoot counts
+3. The only valid characters are in the character set [,0-9.Ll]
+
+There are several helper functions;
+
+* coyStart()  - Find malformed records not containing a starting ','
+* coyEnd()    - Find malformed records not containing a 'L', or 'l'
+* okChars()   - Find all records with illegal characters
+* coyChars()  - Report illegal characters
+* validateCOY - throw an exception script
+
+```{r sanitychecking}
+x <- c("0.0574250.240.6.5.00347.21.6L23", ",1234;567.8.9L10")
+coyStart(x)
+coyEnd(x)
+okChars(x)
+coyChars(x)
+try(validateCOY(x))
+```
+
+## Todo
+
+More information is required to understand and characterize functions for `DeadBuds` and `Blowouts`.
+
+* Collate all background specifications and existing excel conversion scripts
+* Convert this to a package namespace
+* S4 class with methods?
