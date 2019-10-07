@@ -1,0 +1,16 @@
+Package: coyparser
+Title: Components of yield parser
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Marcus",
+           family = "Davy",
+           role = c("aut", "cre"),
+           email = "Marcus.Davy@plantandfood.co.nz"
+           )
+Description: R package to parse Plant and Foods components of yield format  
+License: None
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 2.1.0)
+RoxygenNote: 6.1.1
