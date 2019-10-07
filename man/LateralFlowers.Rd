@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{LateralFlowers}
 \alias{LateralFlowers}
-\title{export LateralFlowers}
+\title{Extract LateralFlowers  component}
 \usage{
 LateralFlowers(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export LateralFlowers
+Extract LateralFlowers  component
 }

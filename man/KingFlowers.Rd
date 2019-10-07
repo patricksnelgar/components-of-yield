@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{KingFlowers}
 \alias{KingFlowers}
-\title{export KingFlowers}
+\title{Count KingFlowers component}
 \usage{
 KingFlowers(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export KingFlowers
+Count KingFlowers component
 }

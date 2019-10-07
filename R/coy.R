@@ -1,37 +1,73 @@
-#' export coyStart
+#' Is the start of a coy string valid?
+#'
+#' Pattern match the expected start of a components of yield string
+#'
+#' @param x A valid coy string
+#'
+#' @export coyStart
 #'
 coyStart <- function(x){
   return(grepl("^,", x))
 }
 
-#' export coyEnd
+#' Is the end of a coy string valid?
+#'
+#' Patternmatch the expected end of a components of yield string
+#'
+#' @param x A valid coy string
+#'
+#' @export coyEnd
 #'
 coyEnd <- function(x){
   return(grepl("L", x, ignore.case = TRUE))
 }
 
-#' export splitChars
+
+#' Split components of yields characters into a string
+#'
+#' @param x A valid coy string
+#'
+#' @export splitChars
 #'
 splitChars <- function(x) {
   chars <- strsplit(x, "")
   return(chars)
 }
 
-#' export checkChars
+#' Check allowed character types
+#'
+#' Check all allowed character types in components of yield string
+#'  [,.0-9L] are all allowed characters
+#'
+#' @param x A valid coy string
+#'
+#' @export checkChars
 #'
 checkChars <- function(x) {
   ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L")})
   return(ok)
 }
 
-#' export okChars
+#' Test if characters are all ok
+#'
+#' Uses checkChars(...) and returns a logical if all characters are ok
+#'
+#' @param x A valid coy string
+#'
+#' @export okChars
 #'
 okChars <- function(x){
   ok <- sapply(checkChars(x), function(x)all(x))
   return(ok)
 }
 
-#' export coyChars
+#' Find malformed characters in a components of yield string
+#'
+#' Uses checkChars(...) and returns a list
+#'
+#' @param x A valid coy string
+#'
+#' @export coyChars
 #'
 coyChars <- function(x) {
   ok <- checkChars(x)
@@ -46,7 +82,11 @@ coyChars <- function(x) {
   return()
 }
 
-#' export validateCOY
+#' Checks and validates a component of yield string
+#'
+#' @param x A valid coy string
+#'
+#' @export validateCOY
 #'
 validateCOY <- function(x){
   checkStart <- coyStart(x)
@@ -69,13 +109,25 @@ validateCOY <- function(x){
   return()
 }
 
-#' export WinterBuds
+#' Extract WinterBuds component
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#'
+#' @export WinterBuds
 #'
 WinterBuds <- function(x){
   nchar(gsub(",(.+)L.+", "\\1", x))
 }
 
-#' export KingFlowers
+#' Count KingFlowers component
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#'
+#' @export KingFlowers
 #'
 KingFlowers <- function(x) {
 
@@ -96,7 +148,13 @@ KingFlowers <- function(x) {
   return(kings)
 }
 
-#' export FloralShoots
+#' Extract FloralShoots component
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#'
+#' @export FloralShoots
 #'
 FloralShoots <- function(x) {
 
@@ -118,14 +176,25 @@ FloralShoots <- function(x) {
   return(florals)
 }
 
-#' export LateralFlowers
+#' Extract LateralFlowers  component
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#'
+#' @export LateralFlowers
 #'
 LateralFlowers <- function(x){
   lats <- as.numeric(gsub(".+L(.+)$", "\\1", x))
   return(lats)
 }
 
-#' export VegetShoots
+#' Count VegetShoots component
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#' @export VegetShoots
 #'
 VegetShoots <- function(x){
 
@@ -147,7 +216,13 @@ VegetShoots <- function(x){
   return(florals)
 }
 
-#' export wideCOY
+#' Return a dataframe in wide format of components of yield
+#'
+#' @param x A valid coy string
+#'
+#' @return numeric vector
+#'
+#' @export wideCOY
 #'
 wideCOY <- function(x, names=NULL) {
   res <- data.frame(warnings = 1*(!(coyStart(x) & coyEnd(x) & okChars(x))),

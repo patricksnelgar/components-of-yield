@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{coyStart}
 \alias{coyStart}
-\title{export coyStart}
+\title{Is the start of a coy string valid?}
 \usage{
 coyStart(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export coyStart
+Pattern match the expected start of a components of yield string
 }

@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{coyEnd}
 \alias{coyEnd}
-\title{export coyEnd}
+\title{Is the end of a coy string valid?}
 \usage{
 coyEnd(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export coyEnd
+Patternmatch the expected end of a components of yield string
 }

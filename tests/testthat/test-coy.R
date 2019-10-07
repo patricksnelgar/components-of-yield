@@ -23,6 +23,15 @@ test_that("Components of yield parsing functions", {
 
   expect_equal(okChars(x), c(TRUE, TRUE))
   expect_null(coyChars(x))
+  expect_null(validateCOY(x))
+  expect_equivalent(wideCOY(x), structure(list(warnings = c(0, 0),
+                                               WinterBuds = c(28L, 11L),
+                                               KingFlowers = c(63, 45),
+                                               LateralFlowers = c(23, 10),
+                                               floralShoots = c(15L, 9L),
+                                               vegetShoots = c(6L, 0L)),
+                                          class = "data.frame",
+                                          row.names = c(NA,  -2L)))
 
 
   x <- c("0.0574250.240.6.5.00347.21.623", ",1234;567.8.9L10")
@@ -52,5 +61,6 @@ test_that("Components of yield parsing functions", {
                     index.number = 2L, char.pos = list(6L)))
 
   expect_error(validateCOY(x), "Start comma missing in: 0.0574250.240.6.5.00347.21.623")
+  expect_error(wideCOY(x), "argument of length 0")
 
 })

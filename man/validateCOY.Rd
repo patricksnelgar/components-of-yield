@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{validateCOY}
 \alias{validateCOY}
-\title{export validateCOY}
+\title{Checks and validates a component of yield string}
 \usage{
 validateCOY(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export validateCOY
+Checks and validates a component of yield string
 }

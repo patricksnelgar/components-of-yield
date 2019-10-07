@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{FloralShoots}
 \alias{FloralShoots}
-\title{export FloralShoots}
+\title{Extract FloralShoots component}
 \usage{
 FloralShoots(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export FloralShoots
+Extract FloralShoots component
 }

@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{coyChars}
 \alias{coyChars}
-\title{export coyChars}
+\title{Find malformed characters in a components of yield string}
 \usage{
 coyChars(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export coyChars
+Uses checkChars(...) and returns a list
 }

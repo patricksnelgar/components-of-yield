@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{VegetShoots}
 \alias{VegetShoots}
-\title{export VegetShoots}
+\title{Count VegetShoots component}
 \usage{
 VegetShoots(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export VegetShoots
+Count VegetShoots component
 }

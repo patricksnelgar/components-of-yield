@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{WinterBuds}
 \alias{WinterBuds}
-\title{export WinterBuds}
+\title{Extract WinterBuds component}
 \usage{
 WinterBuds(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export WinterBuds
+Extract WinterBuds component
 }

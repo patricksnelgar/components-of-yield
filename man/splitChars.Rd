@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{splitChars}
 \alias{splitChars}
-\title{export splitChars}
+\title{Split components of yields characters into a string}
 \usage{
 splitChars(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export splitChars
+Split components of yields characters into a string
 }

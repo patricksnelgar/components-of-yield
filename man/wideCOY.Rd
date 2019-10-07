@@ -2,10 +2,16 @@
 % Please edit documentation in R/coy.R
 \name{wideCOY}
 \alias{wideCOY}
-\title{export wideCOY}
+\title{Return a dataframe in wide format of components of yield}
 \usage{
 wideCOY(x, names = NULL)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
+\value{
+numeric vector
+}
 \description{
-export wideCOY
+Return a dataframe in wide format of components of yield
 }

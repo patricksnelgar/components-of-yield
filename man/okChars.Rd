@@ -2,10 +2,13 @@
 % Please edit documentation in R/coy.R
 \name{okChars}
 \alias{okChars}
-\title{export okChars}
+\title{Test if characters are all ok}
 \usage{
 okChars(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export okChars
+Uses checkChars(...) and returns a logical if all characters are ok
 }

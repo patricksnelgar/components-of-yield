@@ -2,10 +2,14 @@
 % Please edit documentation in R/coy.R
 \name{checkChars}
 \alias{checkChars}
-\title{export checkChars}
+\title{Check allowed character types}
 \usage{
 checkChars(x)
 }
+\arguments{
+\item{x}{A valid coy string}
+}
 \description{
-export checkChars
+Check all allowed character types in components of yield string
+ [,.0-9L] are all allowed characters
 }
