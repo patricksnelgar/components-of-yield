@@ -1,9 +1,19 @@
-Components of Yield
-================
-Marcus Davy
-8/22/2019
 
-> The master version of this document is on [Github](https://github.com/Actinidia/eBrida/blob/master/Scripts/ComponentsOfYield/README.Rmd), currently revision [NA](https://github.com/Actinidia/eBrida/commit/NA) last modified *07 Oct 2019*.
+> The master version of this document is on [Github](https://github.com/Actinidia/eBrida/blob/master/Scripts/ComponentsOfYield/README.Rmd), currently revision [3a6cdb2](https://github.com/Actinidia/eBrida/commit/3a6cdb2) last modified *07 Oct 2019*.
+
+Installation
+============
+
+*Note: Installing Github R packages from private repositories requires generation of a [Github token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line), then set your $GITUB\_PAT environment variable.*
+
+    Sys.setenv(GITHUB_PAT="ba05dd1...d5a87f9")
+
+Use remotes to install
+
+    remotes::install_github("mdavy86/coyparser")
+
+Overview
+========
 
 Components of Yield
 -------------------
@@ -19,18 +29,13 @@ The following script coy.R is a basis of functions to do the conversion. This re
 
 ``` r
 source("R/coy.R")
-```
-
-    ## Loading required package: testthat
-
-``` r
 ls()
 ```
 
     ##  [1] "checkChars"     "coyChars"       "coyEnd"         "coyStart"      
     ##  [5] "FloralShoots"   "gitRevision"    "KingFlowers"    "LateralFlowers"
     ##  [9] "okChars"        "revision"       "splitChars"     "validateCOY"   
-    ## [13] "VegetShoots"    "wideCOY"        "WinterBuds"     "x"
+    ## [13] "VegetShoots"    "wideCOY"        "WinterBuds"
 
 Example 1
 ---------

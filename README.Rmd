@@ -1,7 +1,4 @@
 ---
-title: "Components of Yield"
-author: "Marcus Davy"
-date: "8/22/2019"
 output: 
     github_document : []
     html_document: []
@@ -31,12 +28,31 @@ revision <- gitRevision()
 > The master version of this document is on [Github](https://github.com/Actinidia/eBrida/blob/master/Scripts/ComponentsOfYield/README.Rmd), currently revision
 [`r revision`](https://github.com/Actinidia/eBrida/commit/`r revision`) last modified  *`r format(Sys.time(), "%d %b %Y")`*.
 
+
+# Installation
+
+_Note: Installing Github R packages from private repositories requires generation of a [Github token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line), then set your $GITUB_PAT environment variable._
+
+```
+Sys.setenv(GITHUB_PAT="ba05dd1...d5a87f9")
+```
+
+Use remotes to install
+
+```
+remotes::install_github("mdavy86/coyparser")
+```
+
+
+# Overview
+
 ## Components of Yield
 
 There is a requirement to create functions in R (and perl) to parse
 components of yield information for both current and historical formats.
 
 Kris Kramer-Walter has documented the conversion in a word document.
+
 
 ## R code
 
