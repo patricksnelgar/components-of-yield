@@ -238,12 +238,20 @@ wideCOY <- function(x, names=NULL) {
 
 
 
+#' Return a string with only floral shoots
+#'
+#' @param y a valid COY string
+#'
+#' @return a string with only numerical values (1 - 9)
+#' @export extractFloralShoots
+#'
 extractFloralShoots <- function(y) {
 	
-	noVege <- gsub("[0]+", "", y)
+	
+	noLaterals <- gsub("L([0-9]+)", "", y, ignore.case = TRUE)
+	noVege <- gsub("[0]+", "", noLaterals)
 	noDeadBuds <- gsub("[.]", "", noVege)
-	noLaterals <- gsub("L([0-9]+)", "", noDeadBuds, ignore.case = TRUE)
-	noComma <- gsub("[,]", "", noLaterals)
+	noComma <- gsub("[,]", "", noDeadBuds)
 	
 	return(noComma)
 }
