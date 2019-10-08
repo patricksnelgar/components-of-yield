@@ -238,3 +238,20 @@ wideCOY <- function(x, names=NULL) {
 
 
 
+extractFloralShoots <- function(y) {
+	
+	noVege <- gsub("[0]+", "", y)
+	noDeadBuds <- gsub("[.]", "", noVege)
+	noLaterals <- gsub("L([0-9]+)", "", noDeadBuds, ignore.case = TRUE)
+	noComma <- gsub("[,]", "", noLaterals)
+	
+	return(noComma)
+}
+	
+
+
+
+
+
+
+
