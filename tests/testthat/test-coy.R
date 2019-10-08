@@ -3,6 +3,7 @@ context("Components of yield")
 test_that("Components of yield parsing functions", {
 
   x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9L10")
+  y <- c(",00..00.0..0L0")
 
   expect_equal(WinterBuds(x), c(28,11))
   expect_equal(KingFlowers(x), c(63,45))
@@ -12,6 +13,9 @@ test_that("Components of yield parsing functions", {
 
   expect_equal(coyStart(x), c(TRUE, TRUE))
   expect_equal(coyEnd(x), c(TRUE, TRUE))
+  
+  expect_equal(extractFloralShoots(x), c("574252465347216", "123456789"))
+  expect_equal(extractFloralShoots(y), c(""))
 
   expect_equal(checkChars(x),
                list(c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
