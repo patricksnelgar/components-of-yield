@@ -11,5 +11,5 @@ checkChars(x)
 }
 \description{
 Check all allowed character types in components of yield string
- [,.0-9L] are all allowed characters
+ [,.0-9Ll] are all allowed characters
 }

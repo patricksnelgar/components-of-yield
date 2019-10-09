@@ -37,14 +37,14 @@ splitChars <- function(x) {
 #' Check allowed character types
 #'
 #' Check all allowed character types in components of yield string
-#'  [,.0-9L] are all allowed characters
+#'  [,.0-9Ll] are all allowed characters
 #'
 #' @param x A valid coy string
 #'
 #' @export checkChars
 #'
 checkChars <- function(x) {
-  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L")})
+  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L", "l")})
   return(ok)
 }
 
@@ -252,6 +252,47 @@ extractFloralShoots <- function(x) {
 	noComma <- gsub("[,]", "", noDeadBuds)
 	
 	return(noComma)
+}
+
+
+#' Return a logical vector corresponding to the validity of input string
+#'
+#' @param x coy string
+#'
+#' @return a boolean vector
+#' 
+#' @export isValidCoy
+#' 
+isValidCoy <- function(x) {
+	valid <- TRUE
+	
+	checkStart <- coyStart(x)
+	if(!all(checkStart)) {
+		valid <- FALSE
+	}
+	
+	checkEnd <- coyEnd(x)
+	if(!all(checkEnd)) {
+		valid <- FALSE
+	}
+	
+	checkChars <- coyChars(x)
+	if(!is.null(checkChars)) {
+		valid <- FALSE
+	}
+	
+	return(valid)
+}
+
+#' Returns a vector of booleans for each coy item in the input
+#'
+#' @param x list of
+#'
+#' @return vector of booleans
+#' @export batchValidateCoy
+#'
+batchValidateCoy <- function(x) {
+	return(sapply(x, isValidCoy, USE.NAMES = FALSE))
 }
 	
 
