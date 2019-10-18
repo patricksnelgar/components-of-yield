@@ -7,7 +7,7 @@
 batchValidateCoy(x)
 }
 \arguments{
-\item{x}{list of}
+\item{x}{list of coy strings}
 }
 \value{
 vector of booleans
