@@ -185,7 +185,7 @@ FloralShoots <- function(x) {
 #' @export LateralFlowers
 #'
 LateralFlowers <- function(x){
-  lats <- as.numeric(gsub(".+L(.+)$", "\\1", x))
+  lats <- as.numeric(gsub(".+L(.+)$", "\\1", x, ignore.case = TRUE))
   return(lats)
 }
 
