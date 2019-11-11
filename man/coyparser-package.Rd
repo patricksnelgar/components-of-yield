@@ -6,7 +6,7 @@
 \alias{coyparser-package}
 \title{coyparser: Components of yield parser}
 \description{
-R package to parse Plant and Foods components of yield format
+R package to parse Plant and Foods' components of yield format.
 }
 \author{
 \strong{Maintainer}: Marcus Davy \email{Marcus.Davy@plantandfood.co.nz}

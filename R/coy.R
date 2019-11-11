@@ -37,14 +37,14 @@ splitChars <- function(x) {
 #' Check allowed character types
 #'
 #' Check all allowed character types in components of yield string
-#'  [,.0-9L] are all allowed characters
+#'  [,.0-9Llb] are all allowed characters
 #'
 #' @param x A valid coy string
 #'
 #' @export checkChars
 #'
 checkChars <- function(x) {
-  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L")})
+  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L", "l", "b")})
   return(ok)
 }
 
@@ -137,7 +137,7 @@ KingFlowers <- function(x) {
     res    <- match(c("L","l"), y)-1
     endInd <- res[!is.na(res)]
     chars <- y[stInd:endInd]
-    chars[chars=="."] <- NA
+    chars[chars%in%c(".","b")] <- NA
 
     return(sum(as.numeric(chars), na.rm=TRUE))
   }
@@ -165,7 +165,7 @@ FloralShoots <- function(x) {
     endInd <- res[!is.na(res)]
     chars <- y[stInd:endInd]
     ## exclude 0, '.' for florals
-    chars <- chars[!chars%in%c("0", ".")]
+    chars <- chars[!chars%in%c("0", ".", "b")]
 
     return(length(chars))
   }
@@ -185,7 +185,7 @@ FloralShoots <- function(x) {
 #' @export LateralFlowers
 #'
 LateralFlowers <- function(x){
-  lats <- as.numeric(gsub(".+L(.+)$", "\\1", x))
+  lats <- as.numeric(gsub(".+L(.+)$", "\\1", x, ignore.case = TRUE))
   return(lats)
 }
 
@@ -247,16 +247,68 @@ wideCOY <- function(x, names=NULL) {
 #' @export 
 extractFloralShoots <- function(x) {
 	noLaterals <- gsub("L([0-9]+)", "", x, ignore.case = TRUE)
-	noVege <- gsub("[0]+", "", noLaterals)
-	noDeadBuds <- gsub("[.]", "", noVege)
-	noComma <- gsub("[,]", "", noDeadBuds)
+	onlyFloral <- gsub("[.,b0]+", "", noLaterals, ignore.case = TRUE)
 	
-	return(noComma)
+	return(onlyFloral)
+}
+
+
+#' Return a logical vector corresponding to the validity of input string
+#'
+#' @param x coy string
+#'
+#' @return a boolean vector
+#' 
+#' @export isValidCoy
+#' 
+isValidCoy <- function(x) {
+	valid <- TRUE
+	
+	checkStart <- coyStart(x)
+	if(!all(checkStart)) {
+		valid <- FALSE
+	}
+	
+	checkEnd <- coyEnd(x)
+	if(!all(checkEnd)) {
+		valid <- FALSE
+	}
+	
+	checkChars <- coyChars(x)
+	if(!is.null(checkChars)) {
+		valid <- FALSE
+	}
+	
+	return(valid)
+}
+
+#' Returns a vector of booleans for each coy item in the input
+#'
+#' @param x list of coy strings
+#'
+#' @return vector of booleans
+#' @export batchValidateCoy
+#'
+batchValidateCoy <- function(x) {
+	return(sapply(x, isValidCoy, USE.NAMES = FALSE))
 }
 	
 
-
-
+#' Return the percentage of buds that have shot (floral or vegetative)
+#'
+#' @param x A valid coy string
+#'
+#' @return a double
+#' @export budBreak
+#'
+budBreak <- function(x) {
+	winterBuds <- WinterBuds(x)
+	dormantBuds <- nchar(gsub("[^.]", "", x))
+	
+	percentBudBreak <- 1 - (dormantBuds / winterBuds)
+	
+	return(percentBudBreak)
+}
 
 
 
