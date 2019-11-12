@@ -37,14 +37,14 @@ splitChars <- function(x) {
 #' Check allowed character types
 #'
 #' Check all allowed character types in components of yield string
-#'  [,.0-9Llb] are all allowed characters
+#'  [,.0-9LlbB-+] are all allowed characters
 #'
 #' @param x A valid coy string
 #'
 #' @export checkChars
 #'
 checkChars <- function(x) {
-  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L", "l", "b")})
+  ok <- lapply(splitChars(x), function(x){x%in%c(",", ".", 0:9, "L", "l", "b", "B", "-", "+")})
   return(ok)
 }
 
@@ -310,6 +310,118 @@ budBreak <- function(x) {
 	return(percentBudBreak)
 }
 
+
+#' Return coy string wth all bird damage values removed
+#'
+#' @param x a valid coy string
+#'
+#' @return coy string with no bird damage
+#' @export removeBirdDamage
+#'
+removeBirdDamage <- function(x) {
+	return(gsub("[-b+]+", "", x, ignore.case = TRUE))
+}
+
+
+#' Returns a boolean value corresponding to whether the coy string contains chaacters for bird damage
+#'
+#' @param x a valid coy string
+#'
+#' @return a boolean
+#' @export hasBirdDamage
+#'
+hasBirdDamage <- function(x) {
+	return(sapply(splitChars(x), function(c) { any(c %in% c("b", "B", "-", "+"))}))
+}
+
+
+#' Calculate the percentage of floral shoots, automatically excludes bird damage
+#'
+#' @param x a valid coy string
+#'
+#' @return numeric vector 
+#' @export floralPercentage
+#'
+floralPercentage <- function(x) {
+	calculateFloral <- function(y) {
+		if(hasBirdDamage(y))
+			y <- removeBirdDamage(y)
+		
+		winterBuds <- WinterBuds(y)
+		floralShoots <- FloralShoots(y)
+		
+		return(floralShoots / winterBuds) 
+	}
+	
+	return(sapply(x, calculateFloral, USE.NAMES = FALSE))
+}
+
+
+#' Calculate vegetative shoot percentage, automatically excludes bird damage
+#'
+#' @param x a vlid coy string
+#'
+#' @return numeric vector
+#' @export vegetativePercentage
+#'
+vegetativePercentage <- function(x) {
+	
+	calculateVegetative <- function(y) {
+		if(hasBirdDamage(y))
+			y <- removeBirdDamage(y)
+		
+		numBuds <- WinterBuds(y)
+		vegetativeShoots <- VegetShoots(y)
+		
+		return(vegetativeShoots / numBuds)
+	}
+	return(sapply(x, calculateVegetative, USE.NAMES = FALSE))
+}
+
+
+#' Calculate the average king flowers per winter bud metric
+#'
+#' @param x a valid coy string
+#'
+#' @return numeric vector
+#' @export calculateKFperWB
+#'
+calculateKFperWB <- function(x) {
+	processCane <- function(c) {
+		if(hasBirdDamage(c))
+			c <- removeBirdDamage(c)
+		
+		numBuds <- WinterBuds(c)
+		numFlowers <- KingFlowers(c)
+		
+		return(numFlowers / numBuds)
+	}
+	
+	return(sapply(x, processCane, USE.NAMES = FALSE))
+}
+
+
+#' Calculate average lateral flowers per winter bud
+#'
+#' @param x a valid coy string
+#'
+#' @return a numeric vector
+#' @export calculateLFperWB
+#'
+calculateLFperWB <- function(x) {
+	
+	processCane <- function(c) {
+		if(hasBirdDamage(c))
+			c <- removeBirdDamage(c)
+		
+		numBuds <- WinterBuds(c)
+		numLaterals <- LateralFlowers(c)
+		
+		return(numLaterals / numBuds)
+	}
+	
+	return(sapply(x, processCane, USE.NAMES = FALSE))
+}
 
 
 

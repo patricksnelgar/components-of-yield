@@ -4,6 +4,7 @@ test_that("Components of yield parsing functions", {
 
 	x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9L10", ",.0b220.L10")
 	y <- c(",00..00.0..0L0")
+	b <- c(",-.97.-33.4L100", ",---19b+29L10")
 
  	expect_equal(WinterBuds(x), c(28,11,7))
 	expect_equal(KingFlowers(x), c(63,45,4))
@@ -20,6 +21,19 @@ test_that("Components of yield parsing functions", {
 	
 	expect_true(isValidCoy(y))
 	expect_true(isValidCoy(x))
+	
+	expect_equal(removeBirdDamage(b), c(",.97.33.4L100", ",1929L10"))
+	expect_equal(hasBirdDamage(b), c(TRUE, TRUE))
+	expect_equal(hasBirdDamage(x), c(FALSE, FALSE, TRUE))
+	
+	expect_equal(floralPercentage(x), c(0.5357143, 0.8181818, 0.3333333), tolerance = 1e-7)
+	expect_equal(floralPercentage(b), c(0.625, 1.0))
+	
+	expect_equal(vegetativePercentage(x), c(0.2142857, 0.0, 0.3333333), tolerance = 1e-7)
+	expect_equal(vegetativePercentage(b), c(0.0, 0.0))
+	
+	expect_equal(calculateKFperWB(x), c(2.25, 4.09, 0.6667), tolerance = 0.001)
+	expect_equal(calculateLFperWB(x), c(0.821, 0.909, 1.667), tolerance = 0.001)
 	
 	expect_equal(checkChars(x),
 	           list(c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
