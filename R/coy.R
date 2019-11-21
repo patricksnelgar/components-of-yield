@@ -132,18 +132,19 @@ WinterBuds <- function(x){
 KingFlowers <- function(x) {
 
   countKings <- function(y) {
-    stInd  <- match(",", y)+1
-    ## Remove NAs from upper/lowercase match
-    res    <- match(c("L","l"), y)-1
-    endInd <- res[!is.na(res)]
-    chars <- y[stInd:endInd]
-    chars[chars%in%c(".","b")] <- NA
+  	
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+	
+  	chars <- strsplit(budsOnly, "")[[1]]
+  	
+  	# remove all shoots that are 'dead' or have bird damage
+    chars[chars%in%c(".", "b", "-", "B", "+")] <- NA
 
     return(sum(as.numeric(chars), na.rm=TRUE))
   }
 
-  elements <- splitChars(x)
-  kings <- sapply(elements, countKings)
+  #elements <- splitChars(x)
+  kings <- sapply(x, countKings, USE.NAMES = FALSE)
 
   return(kings)
 }
@@ -159,19 +160,19 @@ KingFlowers <- function(x) {
 FloralShoots <- function(x) {
 
   countFlorals <- function(y) {
-    stInd  <- match(",", y)+1
-    ## Remove NAs from upper/lowercase match
-    res    <- match(c("L","l"), y)-1
-    endInd <- res[!is.na(res)]
-    chars <- y[stInd:endInd]
-    ## exclude 0, '.' for florals
-    chars <- chars[!chars%in%c("0", ".", "b")]
+  	
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+  	
+  	chars <- strsplit(budsOnly, "")[[1]]
+  	
+    ## exclude 0, '.' and any bird damage for florals
+    chars <- chars[!chars%in%c("0", ".", "b", "B", "-", "+")]
 
     return(length(chars))
   }
 
-  elements <- splitChars(x)
-  florals <- sapply(elements, countFlorals)
+  
+  florals <- sapply(x, countFlorals, USE.NAMES = FALSE)
 
   return(florals)
 }
@@ -199,19 +200,18 @@ LateralFlowers <- function(x){
 VegetShoots <- function(x){
 
   countVege <- function(y) {
-    stInd  <- match(",", y)+1
-    ## Remove NAs from upper/lowercase match
-    res    <- match(c("L","l"), y)-1
-    endInd <- res[!is.na(res)]
-    chars <- y[stInd:endInd]
+    
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+  	
+  	chars <- strsplit(budsOnly, "")[[1]]
+  	
     ## only include 0 for veges
     chars <- chars[chars%in%c("0")]
 
     return(length(chars))
   }
 
-  elements <- splitChars(x)
-  florals <- sapply(elements, countVege)
+  florals <- sapply(x, countVege, USE.NAMES = FALSE)
 
   return(florals)
 }
@@ -384,10 +384,10 @@ vegetativePercentage <- function(x) {
 #' @param x a valid coy string
 #'
 #' @return numeric vector
-#' @export calculateKFperWB
+#' @export KingFlowersPerWinterBud
 #'
-calculateKFperWB <- function(x) {
-	processCane <- function(c) {
+KingFlowersPerWinterBud <- function(x) {
+	calculateKFperWB <- function(c) {
 		if(hasBirdDamage(c))
 			c <- removeBirdDamage(c)
 		
@@ -397,7 +397,7 @@ calculateKFperWB <- function(x) {
 		return(numFlowers / numBuds)
 	}
 	
-	return(sapply(x, processCane, USE.NAMES = FALSE))
+	return(sapply(x, calculateKFperWB, USE.NAMES = FALSE))
 }
 
 
@@ -406,11 +406,11 @@ calculateKFperWB <- function(x) {
 #' @param x a valid coy string
 #'
 #' @return a numeric vector
-#' @export calculateLFperWB
+#' @export LateralFlowersPerWinterBud
 #'
-calculateLFperWB <- function(x) {
+LateralFlowersPerWinterBud <- function(x) {
 	
-	processCane <- function(c) {
+	calculateLFperWB <- function(c) {
 		if(hasBirdDamage(c))
 			c <- removeBirdDamage(c)
 		
@@ -420,8 +420,38 @@ calculateLFperWB <- function(x) {
 		return(numLaterals / numBuds)
 	}
 	
-	return(sapply(x, processCane, USE.NAMES = FALSE))
+	return(sapply(x, calculateLFperWB, USE.NAMES = FALSE))
 }
 
 
-
+#' Returns a data frame with the standard COY analysis
+#'
+#' @param x a data frame containing coy strings and their ID
+#'
+#' @return a data frame
+#' @export CoyProcessor
+#'
+CoyProcessor <- function(data, name="coy") {
+	WB <- WinterBuds(data[[name]])
+	KF <- KingFlowers(data[[name]])
+	LF <- LateralFlowers(data[[name]])
+	FS <- FloralShoots(data[[name]])
+	VS <- VegetShoots(data[[name]])
+	BB <- budBreak(data[[name]])
+	FSP <- floralPercentage(data[[name]])
+	KFPWB <- KingFlowersPerWinterBud(data[[name]])
+	LFPWB <- LateralFlowersPerWinterBud(data[[name]])
+	
+	
+	return(data.frame(CaneID = data$CaneID, 
+					  WinterBuds = WB,
+					  KingFlowers = KF,
+					  LateralFlowers = LF,
+					  BudBreak = BB * 100,
+					  VegetativeShoots = VS,
+					  FloralShootPercentage = FSP * 100,
+					  KingFlowersPerWinterBud = KFPWB,
+					  LateralFlowersPerWinterBud = LFPWB,
+					  KingFlowersPerFloralShoots = KF / FS,
+					  row.names = 1:length(data[[name]])))
+}

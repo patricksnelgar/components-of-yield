@@ -32,8 +32,8 @@ test_that("Components of yield parsing functions", {
 	expect_equal(vegetativePercentage(x), c(0.2142857, 0.0, 0.3333333), tolerance = 1e-7)
 	expect_equal(vegetativePercentage(b), c(0.0, 0.0))
 	
-	expect_equal(calculateKFperWB(x), c(2.25, 4.09, 0.6667), tolerance = 0.001)
-	expect_equal(calculateLFperWB(x), c(0.821, 0.909, 1.667), tolerance = 0.001)
+	expect_equal(KingFlowersPerWinterBud(x), c(2.25, 4.09, 0.6667), tolerance = 0.001)
+	expect_equal(LateralFlowersPerWinterBud(x), c(0.821, 0.909, 1.667), tolerance = 0.001)
 	
 	expect_equal(checkChars(x),
 	           list(c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
@@ -89,5 +89,34 @@ test_that("Components of yield parsing functions", {
 	
 	expect_error(validateCOY(x), "Start comma missing in: 0.0574250.240.6.5.00347.21.623")
 	expect_error(wideCOY(x), "argument of length 0")
-
+	
+	
+	dat <- data.frame(CaneID = c(1001, 1002, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105), 
+					  coy = c(",+36442....18.6..6.388878.8977.7...L43",
+					  		",872.36.2..8.79.8.97.8498.7667.7.8.762.L40",
+					  		",--29587.879909.8899.9998.6.L33",
+					  		",546.....4.77.8767.567828.99.7.67.5..L24",
+					  		",-745557..8.26.7..8.98.9.82986871L18",
+					  		",55.8.37.60.6.88.6.87.7..6677.45.4.L16",
+					  		",442....555.8.78.99.8...L47",
+					  		",77...77.89.9.9.967.8.676b3L14",
+					  		",3907..9.9298.98.9.98.99.9.7889.503L36",
+					  		",7788888677597976798.989859988887.6L100",
+					  		",bb6..6.7....88.58.98.99.99.9.78.99.9488.99.65.L63"), stringsAsFactors = FALSE)
+	
+	datOut <- data.frame(CaneID = c(1001, 1002, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105), 
+							 WinterBuds = c(34, 38, 27, 36, 32, 34, 23, 26, 34, 34, 46),
+							 KingFlowers = c(120, 161, 148, 140, 139, 123, 74, 115, 166, 243, 201),
+							 LateralFlowers = c(43, 40, 33, 24, 18, 16, 47, 14, 36, 100, 63),
+							 BudBreak = c(61.76, 65.78, 81.48, 61.11, 71.87, 61.76, 52.17, 65.38, 70.58, 94.11, 60.86),
+							 VegetativeShoots = c(0, 0, 1, 0, 0, 1, 0, 0, 2, 0, 0),
+							 FloralShootPercentage = c(100, 100, 95, 100, 100, 95, 100, 100, 92, 100, 100),
+							 KingFlowersPerWinterBud = c(3.64, 4.24, 5.92, 3.89, 4.48, 3.62, 3.22, 4.60, 4.88, 7.15, 4.57),
+							 LateralFlowersPerWinterBud = c(1.30, 1.05, 1.32, 0.67, 0.58, 0.47, 2.04, 0.56, 1.06, 2.94, 1.43),
+							 KingFlowersPerFloralShoots = c(6.00, 6.44, 7.79, 6.36, 6.32, 6.15, 6.17, 7.19, 7.55, 7.59, 7.73))
+						 
+	
+	expect_equal(class(CoyProcessor(dat)), "data.frame")
+	expect_equal(length(CoyProcessor(dat)), length(datOut))
+	expect_equal(CoyProcessor(dat), datOut, tolerance = 0.001)
 })
