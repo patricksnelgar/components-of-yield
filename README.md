@@ -10,7 +10,7 @@ Installation
 
 Use remotes to install
 
-    remotes::install_github("mdavy86/coyparser")
+    remotes::install_github("patricksnelgar/coyparser")
 
 Overview
 ========
