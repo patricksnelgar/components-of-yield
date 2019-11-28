@@ -64,11 +64,9 @@ test_that("Components of yield parsing functions", {
 	expect_false(isValidCoy(y))
 	
 	expect_equal(WinterBuds(x), c(30,12))
-	expect_error(KingFlowers(x), "argument of length 0")
+	expect_warning(KingFlowers(x), "NAs introduced by coercion")
 	expect_warning(LateralFlowers(x), "NAs introduced by coercion")
 	expect_equal(suppressWarnings(LateralFlowers(x)), c(NA, 10))
-	expect_error(FloralShoots(x), "argument of length 0")
-	expect_error(VegetShoots(x), "argument of length 0")
 	
 	expect_equal(coyStart(x), c(FALSE, TRUE))
 	expect_equal(coyEnd(x), c(FALSE, TRUE))
@@ -88,7 +86,7 @@ test_that("Components of yield parsing functions", {
 	                index.number = 2L, char.pos = list(6L)))
 	
 	expect_error(validateCOY(x), "Start comma missing in: 0.0574250.240.6.5.00347.21.623")
-	expect_error(wideCOY(x), "argument of length 0")
+	expect_warning(wideCOY(x), "NAs introduced by coercion")
 	
 	
 	dat <- data.frame(CaneID = c(1001, 1002, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105), 
@@ -110,9 +108,9 @@ test_that("Components of yield parsing functions", {
 							 LateralFlowers = c(43, 40, 33, 24, 18, 16, 47, 14, 36, 100, 63),
 							 BudBreak = c(61.76, 65.78, 81.48, 61.11, 71.87, 61.76, 52.17, 65.38, 70.58, 94.11, 60.86),
 							 VegetativeShoots = c(0, 0, 1, 0, 0, 1, 0, 0, 2, 0, 0),
-							 FloralShootPercentage = c(100, 100, 95, 100, 100, 95, 100, 100, 92, 100, 100),
+							 FloralShootPercentage = c(60.606, 65.789, 76.000, 61.111, 70.967, 58.823, 52.173, 64.000, 64.705, 94.117, 59.090),
 							 KingFlowersPerWinterBud = c(3.64, 4.24, 5.92, 3.89, 4.48, 3.62, 3.22, 4.60, 4.88, 7.15, 4.57),
-							 LateralFlowersPerWinterBud = c(1.30, 1.05, 1.32, 0.67, 0.58, 0.47, 2.04, 0.56, 1.06, 2.94, 1.43),
+							 LateralFlowersPerWinterBud = c(1.303, 1.052, 1.320, 0.666, 0.580, 0.470, 2.043, 0.560, 1.058, 2.941, 1.431),
 							 KingFlowersPerFloralShoots = c(6.00, 6.44, 7.79, 6.36, 6.32, 6.15, 6.17, 7.19, 7.55, 7.59, 7.73))
 						 
 	

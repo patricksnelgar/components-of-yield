@@ -133,7 +133,7 @@ KingFlowers <- function(x) {
 
   countKings <- function(y) {
   	
-  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y, ignore.case = TRUE)
 	
   	chars <- strsplit(budsOnly, "")[[1]]
   	
@@ -161,12 +161,13 @@ FloralShoots <- function(x) {
 
   countFlorals <- function(y) {
   	
-  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y, ignore.case = TRUE)
   	
   	chars <- strsplit(budsOnly, "")[[1]]
   	
-    ## exclude 0, '.' and any bird damage for florals
-    chars <- chars[!chars%in%c("0", ".", "b", "B", "-", "+")]
+    ## pick out only numbers between 1:9, 0 is vegetative 
+    chars <- chars[chars%in%c(1:9)]
+    
 
     return(length(chars))
   }
@@ -201,7 +202,7 @@ VegetShoots <- function(x){
 
   countVege <- function(y) {
     
-  	budsOnly <- gsub(",(.+)L.+$", "\\1", y)
+  	budsOnly <- gsub(",(.+)L.+$", "\\1", y, ignore.case = TRUE)
   	
   	chars <- strsplit(budsOnly, "")[[1]]
   	
@@ -211,9 +212,9 @@ VegetShoots <- function(x){
     return(length(chars))
   }
 
-  florals <- sapply(x, countVege, USE.NAMES = FALSE)
+  vege <- sapply(x, countVege, USE.NAMES = FALSE)
 
-  return(florals)
+  # return(vege)
 }
 
 #' Return a dataframe in wide format of components of yield
@@ -426,12 +427,14 @@ LateralFlowersPerWinterBud <- function(x) {
 
 #' Returns a data frame with the standard COY analysis
 #'
-#' @param x a data frame containing coy strings and their ID
+#' @param data data frame containing the IDs and coy strings
+#' @param name column containing the coy data, default = "coy"
+#' @param id column containing the identifiers, default = "CaneID"
 #'
 #' @return a data frame
 #' @export CoyProcessor
 #'
-CoyProcessor <- function(data, name="coy") {
+CoyProcessor <- function(data, name="coy", id="CaneID") {
 	WB <- WinterBuds(data[[name]])
 	KF <- KingFlowers(data[[name]])
 	LF <- LateralFlowers(data[[name]])
@@ -443,7 +446,7 @@ CoyProcessor <- function(data, name="coy") {
 	LFPWB <- LateralFlowersPerWinterBud(data[[name]])
 	
 	
-	return(data.frame(CaneID = data$CaneID, 
+	return(data.frame(CaneID = data[[id]], 
 					  WinterBuds = WB,
 					  KingFlowers = KF,
 					  LateralFlowers = LF,

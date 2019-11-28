@@ -4,10 +4,14 @@
 \alias{CoyProcessor}
 \title{Returns a data frame with the standard COY analysis}
 \usage{
-CoyProcessor(data, name = "coy")
+CoyProcessor(data, name = "coy", id = "CaneID")
 }
 \arguments{
-\item{x}{a data frame containing coy strings and their ID}
+\item{data}{data frame containing the IDs and coy strings}
+
+\item{name}{column containing the coy data, default = "coy"}
+
+\item{id}{column containing the identifiers, default = "CaneID"}
 }
 \value{
 a data frame
