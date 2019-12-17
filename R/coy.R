@@ -262,12 +262,15 @@ extractFloralShoots <- function(x) {
 #' 
 #' @export isValidCoy
 #' 
-isValidCoy <- function(x) {
+isValidCoy <- function(x, checkComma = TRUE) {
+	
 	valid <- TRUE
 	
-	checkStart <- coyStart(x)
-	if(!all(checkStart)) {
-		valid <- FALSE
+	if(checkComma){
+		checkStart <- coyStart(x)
+		if(!all(checkStart)) {
+			valid <- FALSE
+		}
 	}
 	
 	checkEnd <- coyEnd(x)
