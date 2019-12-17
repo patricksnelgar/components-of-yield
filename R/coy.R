@@ -290,12 +290,13 @@ isValidCoy <- function(x, checkComma = TRUE) {
 #' Returns a vector of booleans for each coy item in the input
 #'
 #' @param x list of coy strings
+#' @param checkComma flag for toggling validation of coy starting character
 #'
 #' @return vector of booleans
 #' @export batchValidateCoy
 #'
-batchValidateCoy <- function(x) {
-	return(sapply(x, isValidCoy, USE.NAMES = FALSE))
+batchValidateCoy <- function(x, checkComma = TRUE) {
+	return(sapply(x, isValidCoy, USE.NAMES = FALSE, checkComma))
 }
 	
 
