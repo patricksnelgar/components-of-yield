@@ -4,10 +4,12 @@
 \alias{isValidCoy}
 \title{Return a logical vector corresponding to the validity of input string}
 \usage{
-isValidCoy(x)
+isValidCoy(x, checkComma = TRUE)
 }
 \arguments{
 \item{x}{coy string}
+
+\item{checkComma}{flag to toggle validation of the starting character}
 }
 \value{
 a boolean vector

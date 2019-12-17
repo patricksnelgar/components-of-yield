@@ -257,6 +257,7 @@ extractFloralShoots <- function(x) {
 #' Return a logical vector corresponding to the validity of input string
 #'
 #' @param x coy string
+#' @param checkComma flag to toggle validation of the starting character
 #'
 #' @return a boolean vector
 #' 
