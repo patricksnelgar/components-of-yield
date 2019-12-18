@@ -19,7 +19,7 @@ coyStart <- function(x){
 #' @export coyEnd
 #'
 coyEnd <- function(x){
-  return(grepl("L", x, ignore.case = TRUE))
+  return(grepl("L[0-9]+", x, ignore.case = TRUE))
 }
 
 
