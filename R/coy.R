@@ -133,7 +133,11 @@ KingFlowers <- function(x) {
 
   countKings <- function(y) {
   	
-  	budsOnly <- gsub(",(.+)L.+$", "\\1", y, ignore.case = TRUE)
+  	if(coyStart(y)){
+  		budsOnly <- gsub(",(.+)L.+$", "\\1", y, ignore.case = TRUE)
+  	} else {
+  		budsOnly <- gsub("(.+)L.+$", "\\1", y, ignore.case = TRUE)	
+  	}
 	
   	chars <- strsplit(budsOnly, "")[[1]]
   	
