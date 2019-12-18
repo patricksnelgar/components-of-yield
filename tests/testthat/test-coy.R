@@ -64,7 +64,7 @@ test_that("Components of yield parsing functions", {
 	expect_false(isValidCoy(y))
 	
 	expect_equal(WinterBuds(x), c(30,12))
-	expect_warning(KingFlowers(x), "NAs introduced by coercion")
+	#expect_warning(KingFlowers(x), "NAs introduced by coercion")
 	expect_warning(LateralFlowers(x), "NAs introduced by coercion")
 	expect_equal(suppressWarnings(LateralFlowers(x)), c(NA, 10))
 	
