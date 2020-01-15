@@ -142,7 +142,8 @@ KingFlowers <- function(x) {
   	chars <- strsplit(budsOnly, "")[[1]]
   	
   	# remove all shoots that are 'dead' or have bird damage
-    chars[chars%in%c(".", "b", "-", "B", "+")] <- NA
+    #chars[chars%in%c(".", "b", "-", "B", "+")] <- NA
+  	chars <- chars[chars %in% c(0:9)]
 
     return(sum(as.numeric(chars), na.rm=TRUE))
   }
