@@ -2,11 +2,12 @@ context("Components of yield")
 
 test_that("Components of yield parsing functions", {
 
-	x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9L10", ",.0b220.L10")
+	x <- c(",0.0574250.240.6.5.00347.21.6L23", ",1234567.8.9l10", ",.0b220.L10")
 	y <- c(",00..00.0..0L0")
-	b <- c(",-.97.-33.4L100", ",---19b+29L10")
+	b <- c(",-.97.-33.4L100", ",---19b+29l10")
 
  	expect_equal(WinterBuds(x), c(28,11,7))
+ 	expect_equal(WinterBuds(b), c(10,9))
 	expect_equal(KingFlowers(x), c(63,45,4))
 	expect_equal(LateralFlowers(x), c(23,10,10))
 	expect_equal(FloralShoots(x), c(15,9,2))
@@ -22,7 +23,7 @@ test_that("Components of yield parsing functions", {
 	expect_true(isValidCoy(y))
 	expect_true(isValidCoy(x))
 	
-	expect_equal(removeBirdDamage(b), c(",.97.33.4L100", ",1929L10"))
+	expect_equal(removeBirdDamage(b), c(",.97.33.4L100", ",1929l10"))
 	expect_equal(hasBirdDamage(b), c(TRUE, TRUE))
 	expect_equal(hasBirdDamage(x), c(FALSE, FALSE, TRUE))
 	
