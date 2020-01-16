@@ -118,7 +118,7 @@ validateCOY <- function(x){
 #' @export WinterBuds
 #'
 WinterBuds <- function(x){
-  nchar(gsub(",(.+)L.+", "\\1", x))
+  nchar(gsub(",(.+)L.+", "\\1", x, ignore.case = TRUE))
 }
 
 #' Count KingFlowers component
