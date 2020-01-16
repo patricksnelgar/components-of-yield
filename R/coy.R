@@ -118,7 +118,7 @@ validateCOY <- function(x){
 #' @export WinterBuds
 #'
 WinterBuds <- function(x){
-  nchar(gsub(",(.+)L.+", "\\1", x, ignore.case = TRUE))
+  nchar(gsub(",(.+)L+.+", "\\1", x, ignore.case = TRUE))
 }
 
 #' Count KingFlowers component
@@ -192,7 +192,7 @@ FloralShoots <- function(x) {
 #' @export LateralFlowers
 #'
 LateralFlowers <- function(x){
-  lats <- as.numeric(gsub(".+L(.+)$", "\\1", x, ignore.case = TRUE))
+  lats <- as.numeric(gsub(".+L+(.+)$", "\\1", x, ignore.case = TRUE))
   return(lats)
 }
 
@@ -286,6 +286,11 @@ isValidCoy <- function(x, checkComma = TRUE) {
 	
 	checkChars <- coyChars(x)
 	if(!is.null(checkChars)) {
+		valid <- FALSE
+	}
+	
+	y <- gsub(",(.+)L.+", "\\1", x, ignore.case = TRUE)
+	if(length(grep("l", y, ignore.case = TRUE)) > 0){
 		valid <- FALSE
 	}
 	
