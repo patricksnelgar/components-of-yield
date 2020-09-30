@@ -1,17 +1,3 @@
-
-> The master version of this document is on [Github](https://github.com/Actinidia/eBrida/blob/master/Scripts/ComponentsOfYield/README.Rmd), currently revision [3a6cdb2](https://github.com/Actinidia/eBrida/commit/3a6cdb2) last modified *07 Oct 2019*.
-
-Installation
-============
-
-*Note: Installing Github R packages from private repositories requires generation of a [Github token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line), then set your $GITUB\_PAT environment variable.*
-
-    Sys.setenv(GITHUB_PAT="ba05dd1...d5a87f9")
-
-Use remotes to install
-
-    remotes::install_github("patricksnelgar/coyparser")
-
 Overview
 ========
 
