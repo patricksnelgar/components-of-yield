@@ -1,3 +1,8 @@
+Installation:
+using remotes:
+    remotes::install_github("patricksnelgar/components-of-yield")
+
+
 Overview
 ========
 
